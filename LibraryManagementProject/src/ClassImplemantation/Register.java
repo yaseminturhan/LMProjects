@@ -6,10 +6,11 @@
 package ClassImplemantation;
 
 import ClassImplemantation.UserImp;
-import Panel.LoginPage;
+import ClassImplemantation.LoginPage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import ClassImplemantation.FileProcess;
+import ClassImplemantation.TakeInformation;
 
 /**
  *
@@ -123,16 +124,17 @@ public class Register extends javax.swing.JFrame {
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
             
                 
-               // if(registerP.validateForm())  {
-                User user = registerP.getUser();
-                new UserImp().save(user);
+                //if(registerP.validateForm())  {
+                User user = this.getUser();
+                String userx = String.valueOf(user.getId());
+                new UserImp().save(user,userx);
 				JOptionPane.showMessageDialog(new JFrame(), "User successfully registered. Welcome " + user.getName(), "Success", JOptionPane.INFORMATION_MESSAGE);
 				LoginPage tableVisible = new LoginPage();
                                 tableVisible.setVisible(true);
-           // }else {
+            //}else {
 				//JOptionPane.showMessageDialog(new JFrame(), "User values are not validated!", "Error", JOptionPane.ERROR_MESSAGE);                
     }//GEN-LAST:event_registerActionPerformed
-    //}
+    
     /**
      * @param args the command line arguments
      */
@@ -169,6 +171,8 @@ public class Register extends javax.swing.JFrame {
                
         );
     }
+    
+   
     
             
 
