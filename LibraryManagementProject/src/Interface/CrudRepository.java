@@ -5,20 +5,17 @@
  */
 package Interface;
 
-/**
- *
- * @author yaseminturhan
- */
-
-
 import java.util.List;
 
-public interface interfaces<T> {
-
-	void save(T t,String id);
-	void save(T t);
-	void update(String id, T t);
-	void delete(String id);
-	List<T> getAll();
-        
+/**
+ *
+ * @author HP
+ */
+abstract interface CrudRepository<T> {
+    
+    void save(T t);
+    void update(String id, T t);
+    void delete(String id);
+    List<T> getAll();
+    
 }

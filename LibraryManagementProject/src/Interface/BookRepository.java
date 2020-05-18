@@ -5,20 +5,13 @@
  */
 package Interface;
 
+import Models.Book;
+
 /**
  *
- * @author yaseminturhan
+ * @author HP
  */
-
-
-import java.util.List;
-
-public interface interfaces<T> {
-
-	void save(T t,String id);
-	void save(T t);
-	void update(String id, T t);
-	void delete(String id);
-	List<T> getAll();
-        
+public interface BookRepository extends CrudRepository<Book>{
+    
+    
 }
