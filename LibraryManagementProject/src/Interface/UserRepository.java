@@ -5,7 +5,8 @@
  */
 package Interface;
 
-import ClassImplemantation.User;
+import Models.User;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,5 @@ import ClassImplemantation.User;
  */
 public interface UserRepository extends CrudRepository<User>{
     
-    
+    List<User> getByDepartment(String department);
 }

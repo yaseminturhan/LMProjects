@@ -6,6 +6,7 @@
 package Interface;
 
 import Models.Book;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,9 @@ import Models.Book;
  */
 public interface BookRepository extends CrudRepository<Book>{
     
+    Book getById(String id);
+    List<Book> getByCategory(String category);
+    List<Book> getByPublisher(String publisher);
+    List<Book> getByAuthor(String author);
     
 }

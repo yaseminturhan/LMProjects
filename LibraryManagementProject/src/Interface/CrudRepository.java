@@ -11,9 +11,10 @@ import java.util.List;
  *
  * @author HP
  */
-abstract interface CrudRepository<T> {
+public interface CrudRepository<T> {
     
     void save(T t);
+    void save(T t, String id);
     void update(String id, T t);
     void delete(String id);
     List<T> getAll();
