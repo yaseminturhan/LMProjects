@@ -18,5 +18,6 @@ public interface CrudRepository<T> {
     void update(String id, T t);
     void delete(String id);
     List<T> getAll();
+    T getById(String id);
     
 }

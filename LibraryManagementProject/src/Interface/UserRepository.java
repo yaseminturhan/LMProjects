@@ -15,4 +15,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User>{
     
     List<User> getByDepartment(String department);
+    User getByUsername(String username);
 }

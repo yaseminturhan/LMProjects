@@ -5,33 +5,48 @@
  */
 package Service;
 
-import Interface.UserRepository;
-import Models.User;
+import Interface.BookRepository;
+import Models.Book;
 import java.util.List;
 
 /**
  *
  * @author HP
  */
-public class UserService implements UserRepository{
+public class BookService implements BookRepository{
 
     @Override
-    public List<User> getByDepartment(String department) {
+    public Book getById(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(User t) {
+    public List<Book> getByCategory(String category) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(User t, String id) {
+    public List<Book> getByPublisher(String publisher) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(String id, User t) {
+    public List<Book> getByAuthor(String author) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void save(Book t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void save(Book t, String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(String id, Book t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -41,19 +56,8 @@ public class UserService implements UserRepository{
     }
 
     @Override
-    public List<User> getAll() {
+    public List<Book> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public User getById(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public User getByUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     
 }
