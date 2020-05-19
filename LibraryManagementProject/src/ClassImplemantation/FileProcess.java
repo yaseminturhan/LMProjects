@@ -70,6 +70,80 @@ public class FileProcess {
 		}
 		return lines;
 	}
+        
+        public String readLineById(String fileName, String id) {
+		String data = "";
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(fileName));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				if(line.split("___")[0].equals(id)) {
+					data = line;
+                                        break;
+				}
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+                
+                return data;
+
+	}
+        
+        public ArrayList<String> readLinesByCategory(String filename, String category){
+            ArrayList<String> lines = new ArrayList<>();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(filename));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				if(line.split("___")[4].equals(category)) {
+					lines.add(line);
+				}
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lines;
+            
+        }
+        
+        public ArrayList<String> readLinesByAuthor(String filename, String author){
+            ArrayList<String> lines = new ArrayList<>();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(filename));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				if(line.split("___")[2].equals(author)) {
+					lines.add(line);
+				}
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lines;
+            
+        }
+        
+        public ArrayList<String> readLinesByPublisher(String filename, String publisher){
+            ArrayList<String> lines = new ArrayList<>();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(filename));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				if(line.split("___")[5].equals(publisher)) {
+					lines.add(line);
+				}
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lines;
+            
+        }
 	
 	public ArrayList<String> readLines(String fileName) {
 		ArrayList<String> lines = new ArrayList<>();

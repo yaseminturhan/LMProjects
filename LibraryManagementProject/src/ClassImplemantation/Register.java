@@ -6,11 +6,11 @@
 package ClassImplemantation;
 
 import ClassImplemantation.UserImp;
-import ClassImplemantation.LoginPage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import ClassImplemantation.FileProcess;
 import ClassImplemantation.TakeInformation;
+import Panel.LoginPage;
 
 /**
  *

@@ -22,15 +22,18 @@ public class User {
     private Boolean isAdmin;
     private List<Book> books;
 
-    public User(int id, String name, String surname, String username, String password, Boolean isAdmin, List<Book> books) {
+    public User(int id, String name, String surname, String username, String password, String department, Boolean isAdmin, List<Book> books) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
+        this.department = department;
         this.isAdmin = isAdmin;
         this.books = books;
     }
+    
+    
 
     public User() {
     }
@@ -92,6 +95,18 @@ public class User {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+
+    
+    
     
     
     

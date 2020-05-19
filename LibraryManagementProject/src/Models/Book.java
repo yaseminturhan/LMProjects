@@ -11,20 +11,19 @@ package Models;
  */
 public class Book {
     
-    private int id;
+    private String id;
     private String name;
     private String author;
     private String publishDate;
     private String category;
-    private String summary;
     private String publisher;
 
-    public Book(String name, String author, String publishDate, String category, String summary, String publisher) {
+    public Book(String id,String name, String author, String publishDate, String category, String publisher) {
+        this.id = id;
         this.name = name;
         this.author = author;
         this.publishDate = publishDate;
         this.category = category;
-        this.summary = summary;
         this.publisher = publisher;
     }
 
@@ -33,11 +32,11 @@ public class Book {
     
     
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,13 +72,6 @@ public class Book {
         this.category = category;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
 
     public String getPublisher() {
         return publisher;
