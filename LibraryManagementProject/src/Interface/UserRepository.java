@@ -5,15 +5,15 @@
  */
 package Interface;
 
-import Models.User;
+import Models.UserModel;
 import java.util.List;
 
 /**
  *
  * @author HP
  */
-public interface UserRepository extends CrudRepository<User>{
+public interface UserRepository extends CrudRepository<UserModel>{
     
-    List<User> getByDepartment(String department);
-    User getByUsername(String username);
+    List<UserModel> getByDepartment(String department);
+    UserModel getByUsername(String username);
 }
