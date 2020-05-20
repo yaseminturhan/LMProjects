@@ -338,9 +338,11 @@ public class AddingUser extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         
-       
-            
-        
+       DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+       int selectedRowIndex = userTable.getSelectedRow();
+       userService.delete(model.getValueAt(selectedRowIndex, 0).toString());
+       System.out.println(model.getValueAt(selectedRowIndex, 0).toString());
+       model.removeRow(selectedRowIndex);
     }//GEN-LAST:event_deleteBtnActionPerformed
     
 
