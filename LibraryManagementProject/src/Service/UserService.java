@@ -18,7 +18,13 @@ import java.util.Random;
 import ClassImplemantation.TakeInformation;
 import Models.Book;
 import java.util.Date;
-
+import Service.UserService;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import static java.nio.file.Files.lines;
 /**
  *
  * @author HP
@@ -30,37 +36,70 @@ import java.util.Date;
  */
 public class UserService extends FileProcess implements UserRepository{
     
-    private static final String USERS_FILE = "users.txt";
+    private static final String USERS_FILE = "userdeneme.txt";
 
 
-     public UserModel getByDepartment(String department) {
+     /*public UserModel getByDepartment(String department) {
         String line = super.readLineById(USERS_FILE, department);
         return toUser(line);
     }
-    
+    */
 
     @Override
     public void save(UserModel t) {
-        
+        String lines = t.getId() + "___" + t.getName() + "___" + t.getSurname()+ "___" + t.getUsername()+ "___" + t.getPassword()+ "___" + t.getDepartment()+ "___" + t.getIsAdmin();
+        super.writeFile(USERS_FILE,lines);
     }
 
     @Override
     public void save(UserModel t, String id) {
-                t.setId(Integer.parseInt(id));
-		super.writeFile(USERS_FILE, t.toString());
+                
     }
+    
+    
 
     @Override
     public void update(String id, UserModel t) {
-        String temp =id;
-	delete(id);
-	this.save(t,temp); 
+        String line = super.readLineById(USERS_FILE, id);
+        UserModel userupdate = toUser(line);
+        userupdate.setId(t.getId());
+        userupdate.setName(t.getName());
+        userupdate.setSurname(t.getSurname());
+        userupdate.setUsername(t.getUsername());
+        userupdate.setPassword(t.getPassword());
+        userupdate.setIsAdmin(t.getIsAdmin());
+        save(userupdate);
     }
-
-    @Override
+    
+    public ArrayList<String> readLines(String fileName) {
+		ArrayList<String> lines = new ArrayList<>();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(USERS_FILE));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lines;
+	}
+    
+    	private FileReader getFileReader(String fileName) throws IOException {
+		File file = new File(fileName);
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		return new FileReader(file.getAbsoluteFile());
+	}
+        
+        
+    
     public void delete(String id) {
         super.deleteLine(USERS_FILE, id); 
     }
+    
     
     private List<Book> allToBook(List<String> lines){
         List<Book> books = new ArrayList<>();
@@ -90,7 +129,7 @@ public class UserService extends FileProcess implements UserRepository{
         List<UserModel> users = new ArrayList<>();
         for(String line: lines){
             String[] datas = line.split("_");
-            List<String> userBooks = super.readLines(datas[3]+".txt");
+           
             UserModel user = new UserModel(
                 Integer.valueOf(datas[0]),
                 datas[1],
@@ -98,9 +137,10 @@ public class UserService extends FileProcess implements UserRepository{
                 datas[3],
                 datas[4],
                 datas[5],
-                Boolean.valueOf(datas[6]),
-                allToBook(userBooks)
+                Boolean.valueOf(datas[6])
+                
             );
+            users.add(user);
         }
         
         return users;
@@ -120,8 +160,8 @@ public class UserService extends FileProcess implements UserRepository{
                 datas[3],
                 datas[4],
                 datas[5],
-                Boolean.valueOf(datas[6]),
-                allToBook(userBooks)
+                Boolean.valueOf(datas[6])
+                
         );
         
     }
@@ -139,6 +179,8 @@ public class UserService extends FileProcess implements UserRepository{
         
     }
     
+    
+    
 
 
     @Override
@@ -147,11 +189,13 @@ public class UserService extends FileProcess implements UserRepository{
         return toUser(line);
     }
 
-    @Override
+    /*@Override
     public UserModel getByUsername(String username) {
         String line = super.readLineById(USERS_FILE, username);
         return toUser(line);
-    }
+    }*/
+
+    
     
     
  
