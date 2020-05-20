@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface UserRepository extends CrudRepository<UserModel>{
     
-    List<UserModel> getByDepartment(String department);
+    UserModel getByDepartment(String department);
     UserModel getByUsername(String username);
 }

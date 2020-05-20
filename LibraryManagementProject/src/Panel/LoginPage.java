@@ -5,8 +5,8 @@
  */
 package Panel;
 
-import ClassImplemantation.AdminPage;
-import ClassImplemantation.HomePage;
+
+import Panel.HomePanel;
 import ClassImplemantation.UserImp;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -107,11 +107,11 @@ public class LoginPage extends javax.swing.JFrame {
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
          if(getUserName().equals("admin") && getPassword().equals("admin")) {
-				AdminPage adminFrame = new AdminPage();
-				adminFrame.setVisible(true);
+				//AdminPage adminFrame = new AdminPage();
+				//adminFrame.setVisible(true);
 				dispose();
 			} else if(new UserImp().login(getUserName(), getPassword())) {
-				HomePage homePage = new HomePage();
+				HomePanel homePage = new HomePanel();
 				dispose();
 				homePage.setVisible(true);
 			} else {
