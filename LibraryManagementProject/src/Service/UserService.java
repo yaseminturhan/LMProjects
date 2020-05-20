@@ -101,22 +101,7 @@ public class UserService extends FileProcess implements UserRepository{
     }
     
     
-    private List<Book> allToBook(List<String> lines){
-        List<Book> books = new ArrayList<>();
-        for(String line : lines){
-            String[] datas = line.split("_");
-            Book book = new Book(
-                    datas[0],
-                    datas[1],
-                    datas[2],
-                    datas[3],
-                    datas[4],
-                    datas[5]
-            );        
-            books.add(book);
-        }
-        return books;
-    }
+    
 
     @Override
     public List<UserModel> getAll() {
@@ -166,21 +151,7 @@ public class UserService extends FileProcess implements UserRepository{
         
     }
     
-    private Book toBook(String line){
-        String[] datas = line.split("_");
-        return new Book(
-                datas[0],
-                datas[1],
-                datas[2],
-                datas[3],
-                datas[4],
-                datas[5]
-        ); 
-        
-    }
-    
-    
-    
+   
 
 
     @Override
