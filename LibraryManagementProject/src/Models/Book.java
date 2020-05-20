@@ -80,6 +80,11 @@ public class Book {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
+
+    @Override
+    public String toString() {
+        return id + "___" + name + "___" + author + "___" + publishDate + "___" + category + "___" + publisher + '}';
+    }
     
     
     

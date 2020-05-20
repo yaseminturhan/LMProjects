@@ -45,25 +45,23 @@ public class BookService extends FileProcess implements BookRepository{
 
     @Override
     public void save(Book book) {
-        String lines = book.getId() + "___" + book.getName() + "___" + book.getAuthor() + "___" + book.getPublishDate() + "___" + book.getCategory() + "___" + book.getPublisher();
-        super.writeFile(FILE_NAME,lines);
+        
+        int id = super.getLastId(FILE_NAME);
+        book.setId(String.valueOf(id));
+        super.writeFile(FILE_NAME,book.toString());
     }
 
     @Override
     public void save(Book book, String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         book.setId(id);
+         super.writeFile(FILE_NAME, book.toString());
     }
 
     @Override
     public void update(String id, Book book) {
-        String line = super.readLineById(FILE_NAME, id);
-        Book bookToUpdate = toBook(line);
-        bookToUpdate.setAuthor(book.getAuthor());
-        bookToUpdate.setCategory(book.getCategory());
-        bookToUpdate.setName(book.getName());
-        bookToUpdate.setPublishDate(book.getPublishDate());
-        bookToUpdate.setPublisher(book.getPublisher());
-        save(bookToUpdate);
+        String temp =id;
+        delete(id);
+        this.save(book,temp); 
     }
 
     @Override
