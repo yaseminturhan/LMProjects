@@ -113,7 +113,7 @@ public class UserService extends FileProcess implements UserRepository{
         
         List<UserModel> users = new ArrayList<>();
         for(String line: lines){
-            String[] datas = line.split("_");
+            String[] datas = line.split("__");
            
             UserModel user = new UserModel(
                 Integer.valueOf(datas[0]),
@@ -122,7 +122,8 @@ public class UserService extends FileProcess implements UserRepository{
                 datas[3],
                 datas[4],
                 datas[5],
-                Boolean.valueOf(datas[6])
+                Boolean.valueOf(datas[6]),
+                new ArrayList<Book>()
                 
             );
             users.add(user);
@@ -145,7 +146,8 @@ public class UserService extends FileProcess implements UserRepository{
                 datas[3],
                 datas[4],
                 datas[5],
-                Boolean.valueOf(datas[6])
+                Boolean.valueOf(datas[6]),
+                new ArrayList<Book>()
                 
         );
         
