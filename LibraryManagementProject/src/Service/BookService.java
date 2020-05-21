@@ -77,7 +77,7 @@ public class BookService extends FileProcess implements BookRepository{
     }
     
     
-    private Book toBook(String line){
+    public Book toBook(String line){
         String[] datas = line.split("___");
         return new Book(
                 datas[0],
@@ -90,7 +90,7 @@ public class BookService extends FileProcess implements BookRepository{
         
     }
     
-    private List<Book> allToBook(List<String> lines){
+    public List<Book> allToBook(List<String> lines){
         List<Book> books = new ArrayList<>();
         for(String line : lines){
             String[] datas = line.split("___");

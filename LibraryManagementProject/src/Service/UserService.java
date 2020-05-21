@@ -34,8 +34,8 @@ import static java.nio.file.Files.lines;
 public class UserService extends FileProcess implements UserRepository{
     
     private static final String USERS_FILE = "userdeneme.txt";
-
-
+    private BookService bookService = new BookService();
+    
      /*public UserModel getByDepartment(String department) {
         String line = super.readLineById(USERS_FILE, department);
         return toUser(line);
@@ -47,6 +47,7 @@ public class UserService extends FileProcess implements UserRepository{
         int id = super.getLastId(USERS_FILE);
         t.setId(String.valueOf(id));
         super.writeFile(USERS_FILE,t.toString());
+        super.writeFile(t.getUsername()+".txt", "");
     }
 
     @Override
@@ -70,30 +71,6 @@ public class UserService extends FileProcess implements UserRepository{
         save(userupdate);
     }
     
-    public ArrayList<String> readLines(String fileName) {
-		ArrayList<String> lines = new ArrayList<>();
-		try {
-			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(USERS_FILE));
-			String line;
-			while((line = bufferedReader.readLine()) != null) {
-				lines.add(line);
-			}
-			bufferedReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return lines;
-	}
-    
-    	private FileReader getFileReader(String fileName) throws IOException {
-		File file = new File(fileName);
-		if(!file.exists()) {
-			file.createNewFile();
-		}
-		return new FileReader(file.getAbsoluteFile());
-	}
-        
-        
     
     public void delete(String id) {
         super.deleteLine(USERS_FILE, id); 
@@ -125,8 +102,7 @@ public class UserService extends FileProcess implements UserRepository{
                     datas[3],
                     datas[4],
                     datas[5],
-                    Boolean.valueOf(datas[6]),
-                    books
+                    Boolean.valueOf(datas[6])
                 );
                 users.add(user);
             }
@@ -150,8 +126,7 @@ public class UserService extends FileProcess implements UserRepository{
                 datas[3],
                 datas[4],
                 datas[5],
-                Boolean.valueOf(datas[6]),
-                books      
+                Boolean.valueOf(datas[6])  
         );
         
     }
@@ -170,6 +145,18 @@ public class UserService extends FileProcess implements UserRepository{
         String line = super.readLineById(USERS_FILE, username);
         return toUser(line);
     }*/
+
+    @Override
+    public void addBookUser(String username,Book book) {
+        String fileName = username+".txt";
+        super.writeFile(fileName, book.toString());
+        
+    }
+
+    @Override
+    public List<Book> getUserBooks(String username) {
+        return bookService.allToBook(super.readLines(username+".txt"));
+    }
 
     
     

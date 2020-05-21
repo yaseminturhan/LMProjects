@@ -15,9 +15,9 @@ public class UserModel implements Comparable <UserModel>{
     private String password;
     private String department;
     private Boolean isAdmin;
-    private List<Book> books;
 
-    public UserModel(String id, String name, String surname, String username, String password, String department, Boolean isAdmin, List<Book> books) {
+
+    public UserModel(String id, String name, String surname, String username, String password, String department, Boolean isAdmin) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -25,7 +25,6 @@ public class UserModel implements Comparable <UserModel>{
         this.password = password;
         this.department = department;
         this.isAdmin = isAdmin;
-        this.books = books;
     }
     
     
@@ -81,14 +80,6 @@ public class UserModel implements Comparable <UserModel>{
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 
     public String getDepartment() {

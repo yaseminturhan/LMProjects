@@ -5,6 +5,7 @@
  */
 package Interface;
 
+import Models.Book;
 import Models.UserModel;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface UserRepository extends CrudRepository<UserModel>{
     
     //UserModel getByDepartment(String department);
    // UserModel getByUsername(String username);
+    void addBookUser(String username, Book book);
+    List<Book> getUserBooks(String username);
     
     
     

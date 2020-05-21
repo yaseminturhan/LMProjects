@@ -105,7 +105,7 @@ public class LoginPage extends javax.swing.JFrame {
     }
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-         if(getUserName().equals("admin") && getPassword().equals("admin")) {
+         /*if(getUserName().equals("admin") && getPassword().equals("admin")) {
 				//AdminPage adminFrame = new AdminPage();
 				//adminFrame.setVisible(true);
 				dispose();
@@ -115,7 +115,7 @@ public class LoginPage extends javax.swing.JFrame {
 				homePage.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), "Username or password is wrong!", "Login Error", JOptionPane.ERROR_MESSAGE);
-			}
+			}*/
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**

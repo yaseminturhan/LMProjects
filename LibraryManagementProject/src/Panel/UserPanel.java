@@ -5,8 +5,14 @@
  */
 package Panel;
 
+import Models.Book;
+import Models.UserModel;
+import Service.BookService;
+import Service.UserService;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -16,11 +22,23 @@ import javax.swing.table.TableModel;
  */
 public class UserPanel extends javax.swing.JFrame {
 
+    
+    private UserService userService = new UserService();
+    private BookService bookService = new BookService();
+    private List<Book> libraryBooksList;
+    private List<Book> userBooksList;
+    private String loginUsername;
     /**
      * Creates new form UserPage
      */
-    public UserPanel() {
+    public UserPanel(String username) {
         initComponents();
+        this.loginUsername = username;
+        refreshList();
+        
+        
+        
+        
     }
 
     /**
@@ -97,7 +115,7 @@ public class UserPanel extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jTabbedPane1.addTab("kütüphane", jPanel1);
 
         myLibraryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,7 +158,7 @@ public class UserPanel extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel2);
+        jTabbedPane1.addTab("kullanıcı", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,27 +182,7 @@ public class UserPanel extends javax.swing.JFrame {
     private static final String FILE_NAME = "books.txt";
     
     private void listBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listBtnActionPerformed
-         try{
-            
-            BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
-            //String firstLine = br.readLine().trim();
-            //String[] columnName = firstLine.split(",");
-            DefaultTableModel model = (DefaultTableModel)libraryTable.getModel();
-            //model.setColumnIdentifiers(columnName);
-            
-            Object[] tableLines = br.lines().toArray();
-            
-            for(int i = 0; i<tableLines.length; i++){
-                
-                String line= tableLines[i].toString().trim();
-                String[] dataRow = line.split("___");
-                model.addRow(dataRow);
-         
-            }
-            
-        }catch(Exception ex){
-            
-        }
+         refreshList();
     }//GEN-LAST:event_listBtnActionPerformed
 
     private void takeBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeBookActionPerformed
@@ -270,9 +268,44 @@ public class UserPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserPanel().setVisible(true);
+                new UserPanel("m").setVisible(true);
             }
         });
+    }
+    
+    private void refreshList(){
+        libraryBooksList = bookService.getAll();
+        userBooksList = userService.getUserBooks(loginUsername);
+        Collections.sort(libraryBooksList);
+        Collections.sort(userBooksList);
+        String[] tableColumnNames = {"ID", "Name", "Author", "Publish Date", "Category", "Publisher" };
+        DefaultTableModel libraryTableModel = (DefaultTableModel)libraryTable.getModel();
+        DefaultTableModel userLibraryTableModel = (DefaultTableModel)myLibraryTable.getModel();
+        
+        libraryTableModel.getDataVector().removeAllElements();
+        userLibraryTableModel.getDataVector().removeAllElements();
+        for(int i=0; i<userBooksList.size(); i++){
+           for(int j=0; j<libraryBooksList.size(); j++){
+               if(userBooksList.get(i).getId().equals(libraryBooksList.get(j).getId())){   
+                   libraryBooksList.remove(j);
+                   break;
+               }
+           }
+        }
+
+        
+        libraryTableModel.setColumnIdentifiers(tableColumnNames);
+        for(Book book : libraryBooksList){ 
+            String[] dataRow = {book.getId(), book.getName(), book.getAuthor(), book.getPublishDate(), book.getCategory(), book.getPublisher() };
+            libraryTableModel.addRow(dataRow);
+        }
+        
+        
+        userLibraryTableModel.setColumnIdentifiers(tableColumnNames);  
+        for(Book book : userBooksList){         
+            String[] dataRow = {book.getId(), book.getName(), book.getAuthor(), book.getPublishDate(), book.getCategory(), book.getPublisher() };
+            userLibraryTableModel.addRow(dataRow);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
