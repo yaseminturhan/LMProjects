@@ -29,12 +29,8 @@ public class UserPage extends javax.swing.JFrame {
         initComponents();
         isEdit = true;
         this.user = userToUpdate;
-        nameTF.setText(userToUpdate.getName());
-        surnameTF.setText(userToUpdate.getSurname());
-        usernameTF.setText(userToUpdate.getUsername());
-        passwordTF.setText(userToUpdate.getPassword());
-        departmentTF.setText(userToUpdate.getDepartment());
-        isAdmin.setSelected(userToUpdate.getIsAdmin());
+        toView(userToUpdate);
+        
     }
     
 
@@ -161,23 +157,22 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        
+
         if(isEdit){
-            
             fromView(user);
-            userService.update(String.valueOf(user.getId()), user);
-            
+            userService.update(String.valueOf(user.getId()), user);         
         }else{
             user = new UserModel();
             fromView(user);
             userService.save(user);
-        }
-        
-        
+        }      
+        new AdminPage().setVisible(true);
+        dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+        new AdminPage().setVisible(true);
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -224,6 +219,15 @@ public class UserPage extends javax.swing.JFrame {
         user.setDepartment(departmentTF.getText());
         user.setIsAdmin(isAdmin.isSelected());
        
+    }
+    
+    private void toView(UserModel user){
+        nameTF.setText(user.getName());
+        surnameTF.setText(user.getSurname());
+        usernameTF.setText(user.getUsername());
+        passwordTF.setText(user.getPassword());
+        departmentTF.setText(user.getDepartment());
+        isAdmin.setSelected(user.getIsAdmin());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

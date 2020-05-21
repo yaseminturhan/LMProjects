@@ -11,11 +11,8 @@ import Interface.BookRepository;
 import Models.UserModel;
 import java.util.List;
 import ClassImplemantation.FileProcess;
-import ClassImplemantation.Global;
-import ClassImplemantation.User;
 import java.util.ArrayList;
 import java.util.Random;
-import ClassImplemantation.TakeInformation;
 import Models.Book;
 import java.util.Date;
 import Service.UserService;
@@ -47,13 +44,15 @@ public class UserService extends FileProcess implements UserRepository{
 
     @Override
     public void save(UserModel t) {
-        String lines = t.getId() + "___" + t.getName() + "___" + t.getSurname()+ "___" + t.getUsername()+ "___" + t.getPassword()+ "___" + t.getDepartment()+ "___" + t.getIsAdmin();
-        super.writeFile(USERS_FILE,lines);
+        int id = super.getLastId(USERS_FILE);
+        t.setId(String.valueOf(id));
+        super.writeFile(USERS_FILE,t.toString());
     }
 
     @Override
     public void save(UserModel t, String id) {
-                
+        t.setId(id);
+        super.writeFile(USERS_FILE,t.toString());
     }
     
     
@@ -112,43 +111,47 @@ public class UserService extends FileProcess implements UserRepository{
     private List<UserModel> allToUser(List<String> lines){
         
         List<UserModel> users = new ArrayList<>();
-        for(String line: lines){
-            String[] datas = line.split("__");
-           
-            UserModel user = new UserModel(
-                Integer.valueOf(datas[0]),
-                datas[1],
-                datas[2],
-                datas[3],
-                datas[4],
-                datas[5],
-                Boolean.valueOf(datas[6]),
-                new ArrayList<Book>()
-                
-            );
-            users.add(user);
+        List<Book> books = new ArrayList<>();
+        System.out.println(lines.size());
+        if(lines.size() == 0){
+            return users;
+        }else{
+            for(String line: lines){
+                String[] datas = line.split("___");
+                UserModel user = new UserModel(
+                    datas[0],
+                    datas[1],
+                    datas[2],
+                    datas[3],
+                    datas[4],
+                    datas[5],
+                    Boolean.valueOf(datas[6]),
+                    books
+                );
+                users.add(user);
+            }
+            return users;
         }
         
-        return users;
        
        
     }
     
     private UserModel toUser(String line){
         //datas[3] kullanıcı adı olan dosyayı bulmak için
-        String[] datas = line.split("_");
+        String[] datas = line.split("___");
         List<String> userBooks = super.readLines(datas[3]+".txt");
+        List<Book> books = new ArrayList<>();
         
         return new UserModel(
-                Integer.valueOf(datas[0]),
+                datas[0],
                 datas[1],
                 datas[2],
                 datas[3],
                 datas[4],
                 datas[5],
                 Boolean.valueOf(datas[6]),
-                new ArrayList<Book>()
-                
+                books      
         );
         
     }

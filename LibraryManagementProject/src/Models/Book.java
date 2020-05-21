@@ -9,7 +9,7 @@ package Models;
  *
  * @author HP
  */
-public class Book {
+public class Book implements Comparable<Book>{
     
     private String id;
     private String name;
@@ -83,7 +83,12 @@ public class Book {
 
     @Override
     public String toString() {
-        return id + "___" + name + "___" + author + "___" + publishDate + "___" + category + "___" + publisher + '}';
+        return id + "___" + name + "___" + author + "___" + publishDate + "___" + category + "___" + publisher ;
+    }
+
+    @Override
+    public int compareTo(Book o) {
+        return Integer.valueOf(this.getId()).compareTo(Integer.valueOf(o.getId()));
     }
     
     

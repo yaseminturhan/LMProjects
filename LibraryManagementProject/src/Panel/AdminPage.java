@@ -9,8 +9,7 @@ import Models.Book;
 import Models.UserModel;
 import Service.BookService;
 import Service.UserService;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +32,7 @@ public class AdminPage extends javax.swing.JFrame {
         initComponents();
         
         userList =  userService.getAll();
+        Collections.sort(userList);
         String[] userColumnNames = {"ID", "Name", "Surname", "Username", "Department" };
         DefaultTableModel userTableModel = (DefaultTableModel)userTable.getModel();
         userTableModel.setColumnIdentifiers(userColumnNames);
@@ -43,6 +43,7 @@ public class AdminPage extends javax.swing.JFrame {
         }
         
         bookList = bookService.getAll();
+        Collections.sort(bookList);
         String[] bookColumnNames = {"ID", "Name", "Author", "Publish Date", "Category", "Publisher" };
         DefaultTableModel bookTableModel = (DefaultTableModel)bookTable.getModel();
         bookTableModel.setColumnIdentifiers(bookColumnNames);
@@ -107,10 +108,25 @@ public class AdminPage extends javax.swing.JFrame {
         jScrollPane2.setViewportView(userTable);
 
         addUserButton.setText("Add User");
+        addUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserButtonActionPerformed(evt);
+            }
+        });
 
         editUserButton.setText("Edit User");
+        editUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserButtonActionPerformed(evt);
+            }
+        });
 
         deleteUserButton.setText("Delete User");
+        deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserButtonActionPerformed(evt);
+            }
+        });
 
         userBooksButton.setText("User Books");
         userBooksButton.addActionListener(new java.awt.event.ActionListener() {
@@ -153,10 +169,25 @@ public class AdminPage extends javax.swing.JFrame {
         jTabbedPane1.addTab("Users", jPanel2);
 
         addBookButton.setText("Add Book");
+        addBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookButtonActionPerformed(evt);
+            }
+        });
 
         editBookButton.setText("Edit Book");
+        editBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBookButtonActionPerformed(evt);
+            }
+        });
 
         deleteBookButton.setText("Delete Book");
+        deleteBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookButtonActionPerformed(evt);
+            }
+        });
 
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,6 +260,51 @@ public class AdminPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userBooksButtonActionPerformed
 
+    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
+        new UserPage().setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_addUserButtonActionPerformed
+
+    private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        int selectedRowIndex = userTable.getSelectedRow();
+        UserModel userToUpdate = userService.getById(model.getValueAt(selectedRowIndex, 0).toString());
+        System.out.println("gelen "+userToUpdate.getName());
+        new UserPage(userToUpdate).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_editUserButtonActionPerformed
+
+    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
+        
+       DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+       int selectedRowIndex = userTable.getSelectedRow();
+       userService.delete(model.getValueAt(selectedRowIndex, 0).toString());
+       model.removeRow(selectedRowIndex);
+    }//GEN-LAST:event_deleteUserButtonActionPerformed
+
+    private void addBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookButtonActionPerformed
+        new BookPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_addBookButtonActionPerformed
+
+    private void editBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        int selectedRowIndex = bookTable.getSelectedRow();
+        Book bookToUpdate = bookService.getById(model.getValueAt(selectedRowIndex, 0).toString());
+        new BookPage(bookToUpdate).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_editBookButtonActionPerformed
+
+    private void deleteBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookButtonActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        int selectedRowIndex = bookTable.getSelectedRow();
+        bookService.delete(model.getValueAt(selectedRowIndex, 0).toString());
+        model.removeRow(selectedRowIndex);
+    }//GEN-LAST:event_deleteBookButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -262,6 +338,12 @@ public class AdminPage extends javax.swing.JFrame {
                 new AdminPage().setVisible(true);
             }
         });
+    }
+    
+    public void setTabIndex(int index){
+        
+        jTabbedPane1.setSelectedIndex(index);
+        setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

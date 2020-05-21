@@ -6,9 +6,9 @@ import java.util.List;
  *
  * @author HP
  */
-public class UserModel {
+public class UserModel implements Comparable <UserModel>{
     
-    private int id;
+    private String id;
     private String name;
     private String surname;
     private String username;
@@ -17,7 +17,7 @@ public class UserModel {
     private Boolean isAdmin;
     private List<Book> books;
 
-    public UserModel(int id, String name, String surname, String username, String password, String department, Boolean isAdmin, List<Book> books) {
+    public UserModel(String id, String name, String surname, String username, String password, String department, Boolean isAdmin, List<Book> books) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -35,11 +35,11 @@ public class UserModel {
     
     
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,6 +97,16 @@ public class UserModel {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+    
+    @Override
+    public String toString() {
+        return id + "___" + name + "___" + surname + "___" + username + "___" + password + "___" + department + "___" + isAdmin.toString() ;
+    }
+
+    @Override
+    public int compareTo(UserModel o) {
+        return Integer.valueOf(this.getId()).compareTo(Integer.valueOf(o.getId()));
     }
 
 

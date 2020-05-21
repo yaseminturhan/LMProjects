@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import ClassImplemantation.User;
 
 public class FileProcess {
 
@@ -91,6 +90,25 @@ public class FileProcess {
 
 	}
         
+        public int getLastId(String fileName){
+            int lastId = -1;
+            try {
+                BufferedReader bufferedReader = new BufferedReader(this.getFileReader(fileName));
+		String line;
+		while((line = bufferedReader.readLine()) != null) {
+                    int temp = Integer.valueOf(line.split("___")[0]);
+                    if(temp > lastId){
+                        lastId = temp;
+                    }
+                }
+		bufferedReader.close();
+            } catch (IOException e) {
+		e.printStackTrace();
+            }
+            return lastId+1;
+            
+        }
+        
         public ArrayList<String> readLinesByCategory(String filename, String category){
             ArrayList<String> lines = new ArrayList<>();
 		try {
@@ -160,7 +178,7 @@ public class FileProcess {
 		return lines;
 	}
 	
-	public int getLastId(String fileName) {
+	/*public int getLastId(String fileName) {
 		int lastId = 0;
 		try {
 			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(fileName));
@@ -176,7 +194,7 @@ public class FileProcess {
 			e.printStackTrace();
 		}
 		return -1;
-	}
+	}*/
 	
 	private FileReader getFileReader(String fileName) throws IOException {
 		File file = new File(fileName);

@@ -30,12 +30,8 @@ public class BookPage extends javax.swing.JFrame {
     public BookPage(Book bookToUpdate){
         initComponents();
         isEdit=true;
-        nameTF.setText(bookToUpdate.getName());
-        authorTF.setText(bookToUpdate.getAuthor());
-        publishDateTF.setText(bookToUpdate.getPublishDate());
-        publisherTF.setText(bookToUpdate.getPublisher());
-        categoryTF.setText(bookToUpdate.getCategory());
         this.book = bookToUpdate;
+        toView(bookToUpdate);
         
     }
 
@@ -84,12 +80,6 @@ public class BookPage extends javax.swing.JFrame {
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
-            }
-        });
-
-        nameTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTFActionPerformed(evt);
             }
         });
 
@@ -164,7 +154,10 @@ public class BookPage extends javax.swing.JFrame {
             book = new Book();
             fromView(book); 
             bookService.save(book);
-        }  
+        }
+        
+        new AdminPage().setTabIndex(1);
+        dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void fromView(Book book){
@@ -177,12 +170,17 @@ public class BookPage extends javax.swing.JFrame {
        
     }
     
-    private void nameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTFActionPerformed
-
+    private void toView(Book book){
+        nameTF.setText(book.getName());
+        authorTF.setText(book.getAuthor());
+        publishDateTF.setText(book.getPublishDate());
+        publisherTF.setText(book.getPublisher());
+        categoryTF.setText(book.getCategory());
+    }
+    
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        
+        new AdminPage().setTabIndex(1);
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
