@@ -28,13 +28,15 @@ public class UserPanel extends javax.swing.JFrame {
     private List<Book> libraryBooksList;
     private List<Book> userBooksList;
     private String loginUsername;
+    private UserModel usermodel;
     /**
      * Creates new form UserPage
      */
     public UserPanel(String username) {
         initComponents();
         this.loginUsername = username;
-        refreshList();
+        libraryBooksList = bookService.getAll();
+        refreshList(libraryBooksList);
         
         
         
@@ -56,6 +58,8 @@ public class UserPanel extends javax.swing.JFrame {
         libraryTable = new javax.swing.JTable();
         listBtn = new javax.swing.JButton();
         takeBook = new javax.swing.JButton();
+        filterTxt = new javax.swing.JTextField();
+        chooseFilter = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         myLibraryTable = new javax.swing.JTable();
@@ -87,16 +91,35 @@ public class UserPanel extends javax.swing.JFrame {
             }
         });
 
+        filterTxt.setText("jTextField1");
+        filterTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterTxtActionPerformed(evt);
+            }
+        });
+
+        chooseFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Author", "Category", "All" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(takeBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addComponent(takeBook, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(listBtn)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(chooseFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(filterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -108,7 +131,11 @@ public class UserPanel extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
+                        .addGap(66, 66, 66)
+                        .addComponent(chooseFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(filterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
                         .addComponent(listBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(takeBook)))
@@ -182,7 +209,30 @@ public class UserPanel extends javax.swing.JFrame {
     private static final String FILE_NAME = "books.txt";
     
     private void listBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listBtnActionPerformed
-         refreshList();
+        
+        List<Book> books ;
+       
+        choosing = chooseFilter.getSelectedItem().toString();
+        
+        if(choosing == "Name"){
+            
+           libraryBooksList = bookService.getByName(filterTxt.getText());
+           
+        }
+        else if (choosing == "Author"){
+            
+          libraryBooksList = bookService.getByAuthor(filterTxt.getText());
+        }
+        else if (choosing=="Category"){
+          libraryBooksList = bookService.getByCategory(filterTxt.getText());
+        }
+        
+        else{
+            
+            libraryBooksList = bookService.getAll();
+        }
+        
+        refreshList(libraryBooksList);
     }//GEN-LAST:event_listBtnActionPerformed
 
     private void takeBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeBookActionPerformed
@@ -236,6 +286,13 @@ public class UserPanel extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_returnBtnActionPerformed
+    
+    String choosing;
+    
+    private void filterTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterTxtActionPerformed
+        
+        
+    }//GEN-LAST:event_filterTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,8 +330,8 @@ public class UserPanel extends javax.swing.JFrame {
         });
     }
     
-    private void refreshList(){
-        libraryBooksList = bookService.getAll();
+    private void refreshList(List<Book> libraryBooksList){
+        
         userBooksList = userService.getUserBooks(loginUsername);
         Collections.sort(libraryBooksList);
         Collections.sort(userBooksList);
@@ -309,6 +366,8 @@ public class UserPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> chooseFilter;
+    private javax.swing.JTextField filterTxt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

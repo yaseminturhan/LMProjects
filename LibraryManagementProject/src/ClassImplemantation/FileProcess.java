@@ -90,6 +90,26 @@ public class FileProcess {
 
 	}
         
+      
+        public ArrayList<String> readLinesByName(String filename, String name){
+            ArrayList<String> lines = new ArrayList<>();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(this.getFileReader(filename));
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				if(line.split("___")[1].equals(name)) {
+					lines.add(line);
+				}
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lines;
+            
+        }
+        
+        
         public int getLastId(String fileName){
             int lastId = -1;
             try {
@@ -126,6 +146,8 @@ public class FileProcess {
 		return lines;
             
         }
+        
+       
         
         public ArrayList<String> readLinesByAuthor(String filename, String author){
             ArrayList<String> lines = new ArrayList<>();

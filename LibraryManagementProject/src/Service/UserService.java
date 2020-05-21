@@ -36,11 +36,8 @@ public class UserService extends FileProcess implements UserRepository{
     private static final String USERS_FILE = "userdeneme.txt";
     private BookService bookService = new BookService();
     
-     /*public UserModel getByDepartment(String department) {
-        String line = super.readLineById(USERS_FILE, department);
-        return toUser(line);
-    }
-    */
+   
+    
 
     @Override
     public void save(UserModel t) {
@@ -140,11 +137,15 @@ public class UserService extends FileProcess implements UserRepository{
         return toUser(line);
     }
 
-    /*@Override
+    @Override
     public UserModel getByUsername(String username) {
         String line = super.readLineById(USERS_FILE, username);
         return toUser(line);
-    }*/
+    }
+    
+    
+    
+    
 
     @Override
     public void addBookUser(String username,Book book) {

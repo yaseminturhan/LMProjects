@@ -15,8 +15,10 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book>{
     
     Book getById(String id);
+    List<Book> getByName(String name);
     List<Book> getByCategory(String category);
     List<Book> getByPublisher(String publisher);
     List<Book> getByAuthor(String author);
+    
     
 }

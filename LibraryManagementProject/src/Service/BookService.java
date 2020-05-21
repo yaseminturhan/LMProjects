@@ -8,6 +8,7 @@ package Service;
 import ClassImplemantation.FileProcess;
 import Interface.BookRepository;
 import Models.Book;
+import Models.UserModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +25,22 @@ public class BookService extends FileProcess implements BookRepository{
         String line = super.readLineById(FILE_NAME, id);
         return toBook(line);        
     }
+    
+    
 
     @Override
     public List<Book> getByCategory(String category) {
         List<String> lines = super.readLinesByCategory(FILE_NAME, category);
         return allToBook(lines);
     }
+    
+    
+    
+    public List<Book> getByName(String name) {
+        List<String> lines = super.readLinesByPublisher(FILE_NAME, name);
+        return allToBook(lines);
+    }
+   
 
     @Override
     public List<Book> getByPublisher(String publisher) {
@@ -106,4 +117,6 @@ public class BookService extends FileProcess implements BookRepository{
         }
         return books;
     }
+
+    
 }
