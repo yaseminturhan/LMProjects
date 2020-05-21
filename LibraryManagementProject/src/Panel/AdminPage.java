@@ -258,6 +258,15 @@ public class AdminPage extends javax.swing.JFrame {
 
     private void userBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBooksButtonActionPerformed
         // TODO add your handling code here:
+        
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        int selectedRowIndex = userTable.getSelectedRow();
+        String username = model.getValueAt(selectedRowIndex, 1).toString();
+        new UserBooksPage(username).setVisible(true);
+        dispose();
+        
+        
+        
     }//GEN-LAST:event_userBooksButtonActionPerformed
 
     private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
@@ -271,7 +280,6 @@ public class AdminPage extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         int selectedRowIndex = userTable.getSelectedRow();
         UserModel userToUpdate = userService.getById(model.getValueAt(selectedRowIndex, 0).toString());
-        System.out.println("gelen "+userToUpdate.getName());
         new UserPage(userToUpdate).setVisible(true);
         dispose();
     }//GEN-LAST:event_editUserButtonActionPerformed
