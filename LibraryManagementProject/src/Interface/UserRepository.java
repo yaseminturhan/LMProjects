@@ -19,6 +19,7 @@ public interface UserRepository extends CrudRepository<UserModel>{
     UserModel getByUsername(String username);
     void addBookUser(String username, Book book);
     List<Book> getUserBooks(String username);
+    Book removeBookUser(String username, String bookId);
     
     
     

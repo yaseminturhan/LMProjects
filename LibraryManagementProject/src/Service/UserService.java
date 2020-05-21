@@ -35,9 +35,6 @@ public class UserService extends FileProcess implements UserRepository{
     
     private static final String USERS_FILE = "userdeneme.txt";
     private BookService bookService = new BookService();
-    
-   
-    
 
     @Override
     public void save(UserModel t) {
@@ -72,9 +69,6 @@ public class UserService extends FileProcess implements UserRepository{
     public void delete(String id) {
         super.deleteLine(USERS_FILE, id); 
     }
-    
-    
-    
 
     @Override
     public List<UserModel> getAll() {
@@ -104,10 +98,7 @@ public class UserService extends FileProcess implements UserRepository{
                 users.add(user);
             }
             return users;
-        }
-        
-       
-       
+        } 
     }
     
     private UserModel toUser(String line){
@@ -127,9 +118,6 @@ public class UserService extends FileProcess implements UserRepository{
         );
         
     }
-    
-   
-
 
     @Override
     public UserModel getById(String id) {
@@ -143,15 +131,10 @@ public class UserService extends FileProcess implements UserRepository{
         return toUser(line);
     }
     
-    
-    
-    
-
     @Override
     public void addBookUser(String username,Book book) {
         String fileName = username+".txt";
         super.writeFile(fileName, book.toString());
-        
     }
 
     @Override
@@ -159,12 +142,10 @@ public class UserService extends FileProcess implements UserRepository{
         return bookService.allToBook(super.readLines(username+".txt"));
     }
 
-    
-    
-    
- 
-    
-    
-
-    
+    @Override
+    public Book removeBookUser(String username, String bookId) {
+        Book book = bookService.getById(bookId);
+        super.deleteLine(username+".txt", bookId);
+        return book;
+    }  
 }

@@ -91,14 +91,13 @@ public class UserPanel extends javax.swing.JFrame {
             }
         });
 
-        filterTxt.setText("jTextField1");
         filterTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterTxtActionPerformed(evt);
             }
         });
 
-        chooseFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Author", "Category", "All" }));
+        chooseFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Name", "Author", "Category" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,10 +114,9 @@ public class UserPanel extends javax.swing.JFrame {
                             .addComponent(listBtn)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(chooseFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(filterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(chooseFilter, 0, 141, Short.MAX_VALUE)
+                            .addComponent(filterTxt))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -238,53 +236,31 @@ public class UserPanel extends javax.swing.JFrame {
     private void takeBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeBookActionPerformed
         // TODO add your handling code here:
         
-        TableModel model1 = libraryTable.getModel();
+        TableModel model = libraryTable.getModel();
         int indexs[] = libraryTable.getSelectedRows();
         
-        Object[] row = new Object[6];
+        for(int i=0; i<indexs.length; i++){
+            String bookId = model.getValueAt(indexs[i], 0).toString();
+            Book book = bookService.getById(bookId);
+            userService.addBookUser(loginUsername, book);
+        }
         
-        DefaultTableModel model2 = (DefaultTableModel) myLibraryTable.getModel();
+        refreshList(libraryBooksList);
         
-        for(int i = 0; i < indexs.length; i++)
-        {
-            
-           row[0] = model1.getValueAt(indexs[i], 0);
-           row[1] = model1.getValueAt(indexs[i], 1);
-           row[2] = model1.getValueAt(indexs[i], 2);
-           row[3] = model1.getValueAt(indexs[i], 3);
-           row[4] = model1.getValueAt(indexs[i], 4);
-           row[5] = model1.getValueAt(indexs[i], 5);
-            
-           model2.addRow(row);
-        } 
+       
+        
+        
     }//GEN-LAST:event_takeBookActionPerformed
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
-        TableModel model1 = myLibraryTable.getModel();
+        TableModel model = myLibraryTable.getModel();
         int indexs[] = myLibraryTable.getSelectedRows();
-        Object[] row = new Object[6];
-        DefaultTableModel model2 = (DefaultTableModel) libraryTable.getModel();
+        for(int i=0; i<indexs.length; i++){
+            String bookId = model.getValueAt(indexs[i], 0).toString();
+            libraryBooksList.add(userService.removeBookUser(loginUsername, bookId));
+        }
         
-       
-        for(int i = 0; i < indexs.length; i++)
-        {
-            
-           row[0] = model1.getValueAt(indexs[i], 0);
-           row[1] = model1.getValueAt(indexs[i], 1);
-           row[2] = model1.getValueAt(indexs[i], 2);
-           row[3] = model1.getValueAt(indexs[i], 3);
-           row[4] = model1.getValueAt(indexs[i], 4);
-           row[5] = model1.getValueAt(indexs[i], 5);
-            
-           model2.addRow(row);
-           
-        } 
-        
-        
-        
-        
-        
-        
+        refreshList(libraryBooksList);
     }//GEN-LAST:event_returnBtnActionPerformed
     
     String choosing;
