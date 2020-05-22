@@ -2,10 +2,6 @@ package Models;
 
 import java.util.List;
 
-/**
- *
- * @author HP
- */
 public class UserModel implements Comparable <UserModel>{
     
     private String id;
@@ -100,10 +96,4 @@ public class UserModel implements Comparable <UserModel>{
         return Integer.valueOf(this.getId()).compareTo(Integer.valueOf(o.getId()));
     }
 
-
-    
-    
-    
-    
-    
 }

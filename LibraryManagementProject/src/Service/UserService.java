@@ -1,30 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Service;
 
 
 import Interface.UserRepository;
 import Models.UserModel;
 import java.util.List;
-import ClassImplemantation.FileProcess;
 import java.util.ArrayList;
-import Models.Book;
+import Models.BookModel;
 
-/**
- *
- * @author HP
- */
-
-/**
- *
- * @author HP
- */
-public class UserService extends FileProcess implements UserRepository{
+public class UserService extends FileService implements UserRepository{
     
-    private static final String USERS_FILE = "userdeneme.txt";
+    private static final String USERS_FILE = "users.txt";
     private BookService bookService = new BookService();
 
     @Override
@@ -45,20 +30,20 @@ public class UserService extends FileProcess implements UserRepository{
 
     @Override
     public void update(String id, UserModel t) {
-        String line = super.readLineById(USERS_FILE, id);
-        UserModel userupdate = toUser(line);
-        userupdate.setId(t.getId());
-        userupdate.setName(t.getName());
-        userupdate.setSurname(t.getSurname());
-        userupdate.setUsername(t.getUsername());
-        userupdate.setPassword(t.getPassword());
-        userupdate.setIsAdmin(t.getIsAdmin());
-        save(userupdate);
+        String temp = id;
+        delete(id);
+        save(t,id);
     }
     
     
     public void delete(String id) {
         super.deleteLine(USERS_FILE, id); 
+        
+    }
+    
+    public void delete(String id, String username){
+        super.deleteLine(USERS_FILE, id); 
+        super.deleteFile(username+".txt");
     }
 
     @Override
@@ -70,7 +55,7 @@ public class UserService extends FileProcess implements UserRepository{
     private List<UserModel> allToUser(List<String> lines){
         
         List<UserModel> users = new ArrayList<>();
-        List<Book> books = new ArrayList<>();
+        List<BookModel> books = new ArrayList<>();
         System.out.println(lines.size());
         if(lines.size() == 0){
             return users;
@@ -96,7 +81,7 @@ public class UserService extends FileProcess implements UserRepository{
         //datas[3] kullanıcı adı olan dosyayı bulmak için
         String[] datas = line.split("___");
         List<String> userBooks = super.readLines(datas[3]+".txt");
-        List<Book> books = new ArrayList<>();
+        List<BookModel> books = new ArrayList<>();
         
         return new UserModel(
                 datas[0],
@@ -123,21 +108,33 @@ public class UserService extends FileProcess implements UserRepository{
     }
     
     @Override
-    public void addBookUser(String username,Book book) {
+    public void addBookUser(String username,BookModel book) {
         String fileName = username+".txt";
         super.writeFile(fileName, book.toString());
     }
 
     @Override
-    public List<Book> getUserBooks(String username) {
+    public List<BookModel> getUserBooks(String username) {
         return bookService.allToBook(super.readLines(username+".txt"));
     }
 
     @Override
-    public Book removeBookUser(String username, String bookId) {
-        Book book = bookService.getById(bookId);
+    public BookModel removeBookUser(String username, String bookId) {
+        BookModel book = bookService.getById(bookId);
         super.deleteLine(username+".txt", bookId);
         return book;
     }  
+    
+    public UserModel login(String username, String password){
+        ArrayList<String> users = super.readLines(USERS_FILE);
+        for(String line : users) {
+            String[] attr = line.split("___");
+            if(attr[3].equals(username) && attr[4].equals(password)) {
+                UserModel user = new UserModel((attr[0]), attr[1], attr[2], attr[3], attr[4], attr[5], Boolean.valueOf(attr[6]));
+		return user;
+            }
+	}
+        return null;
+    }
     
 }

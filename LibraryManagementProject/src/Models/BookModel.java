@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
-/**
- *
- * @author HP
- */
-public class Book implements Comparable<Book>{
+
+public class BookModel implements Comparable<BookModel>{
     
     private String id;
     private String name;
@@ -18,7 +10,7 @@ public class Book implements Comparable<Book>{
     private String category;
     private String publisher;
 
-    public Book(String id,String name, String author, String publishDate, String category, String publisher) {
+    public BookModel(String id,String name, String author, String publishDate, String category, String publisher) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -27,7 +19,7 @@ public class Book implements Comparable<Book>{
         this.publisher = publisher;
     }
 
-    public Book() {
+    public BookModel() {
     }
     
     
@@ -87,12 +79,8 @@ public class Book implements Comparable<Book>{
     }
 
     @Override
-    public int compareTo(Book o) {
+    public int compareTo(BookModel o) {
         return Integer.valueOf(this.getId()).compareTo(Integer.valueOf(o.getId()));
     }
-    
-    
-    
-     
-    
+
 }

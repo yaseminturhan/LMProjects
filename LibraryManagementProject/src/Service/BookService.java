@@ -1,27 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Service;
 
-import ClassImplemantation.FileProcess;
 import Interface.BookRepository;
-import Models.Book;
-import Models.UserModel;
+import Models.BookModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author HP
- */
-public class BookService extends FileProcess implements BookRepository{
+
+public class BookService extends FileService implements BookRepository{
     
     private static final String FILE_NAME = "books.txt";
     
     @Override
-    public Book getById(String id) {
+    public BookModel getById(String id) {
         String line = super.readLineById(FILE_NAME, id);
         return toBook(line);        
     }
@@ -29,33 +19,33 @@ public class BookService extends FileProcess implements BookRepository{
     
 
     @Override
-    public List<Book> getByCategory(String category) {
+    public List<BookModel> getByCategory(String category) {
         List<String> lines = super.readLinesByCategory(FILE_NAME, category);
         return allToBook(lines);
     }
     
     
     
-    public List<Book> getByName(String name) {
+    public List<BookModel> getByName(String name) {
         List<String> lines = super.readLinesByPublisher(FILE_NAME, name);
         return allToBook(lines);
     }
    
 
     @Override
-    public List<Book> getByPublisher(String publisher) {
+    public List<BookModel> getByPublisher(String publisher) {
         List<String> lines = super.readLinesByPublisher(FILE_NAME, publisher);
         return allToBook(lines);
     }
 
     @Override
-    public List<Book> getByAuthor(String author) {
+    public List<BookModel> getByAuthor(String author) {
         List<String> lines = super.readLinesByAuthor(FILE_NAME, author);
         return allToBook(lines);
     }
 
     @Override
-    public void save(Book book) {
+    public void save(BookModel book) {
         
         int id = super.getLastId(FILE_NAME);
         book.setId(String.valueOf(id));
@@ -63,13 +53,13 @@ public class BookService extends FileProcess implements BookRepository{
     }
 
     @Override
-    public void save(Book book, String id) {
+    public void save(BookModel book, String id) {
          book.setId(id);
          super.writeFile(FILE_NAME, book.toString());
     }
 
     @Override
-    public void update(String id, Book book) {
+    public void update(String id, BookModel book) {
         String temp =id;
         delete(id);
         this.save(book,temp); 
@@ -81,16 +71,16 @@ public class BookService extends FileProcess implements BookRepository{
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<BookModel> getAll() {
         
         List<String> lines = super.readLines(FILE_NAME);   
         return allToBook(lines);
     }
     
     
-    public Book toBook(String line){
+    public BookModel toBook(String line){
         String[] datas = line.split("___");
-        return new Book(
+        return new BookModel(
                 datas[0],
                 datas[1],
                 datas[2],
@@ -101,22 +91,23 @@ public class BookService extends FileProcess implements BookRepository{
         
     }
     
-    public List<Book> allToBook(List<String> lines){
-        List<Book> books = new ArrayList<>();
-        for(String line : lines){
-            String[] datas = line.split("___");
-            Book book = new Book(
+    public List<BookModel> allToBook(List<String> lines){
+        List<BookModel> books = new ArrayList<>();
+        if(lines.size()!=0){
+            for(String line : lines){
+                String[] datas = line.split("___");
+                BookModel book = new BookModel(
                     datas[0],
                     datas[1],
                     datas[2],
                     datas[3],
                     datas[4],
                     datas[5]
-            );        
-            books.add(book);
+                );        
+                books.add(book);
+            }
         }
         return books;
     }
-
     
 }

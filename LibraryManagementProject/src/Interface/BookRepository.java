@@ -1,24 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interface;
 
-import Models.Book;
+import Models.BookModel;
 import java.util.List;
 
-/**
- *
- * @author HP
- */
-public interface BookRepository extends CrudRepository<Book>{
+
+public interface BookRepository extends CrudRepository<BookModel>{
     
-    Book getById(String id);
-    List<Book> getByName(String name);
-    List<Book> getByCategory(String category);
-    List<Book> getByPublisher(String publisher);
-    List<Book> getByAuthor(String author);
+    BookModel getById(String id);
+    List<BookModel> getByName(String name);
+    List<BookModel> getByCategory(String category);
+    List<BookModel> getByPublisher(String publisher);
+    List<BookModel> getByAuthor(String author);
     
     
 }

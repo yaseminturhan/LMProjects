@@ -1,0 +1,2 @@
+1___admin___user___admin___admin___Yazılım___true
+2___admin___user___admin1___admin___Yazılım___false
