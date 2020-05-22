@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileService {
     
@@ -21,6 +23,19 @@ public class FileService {
 	} catch (IOException e) {
             e.printStackTrace();
 	}
+    }
+    
+    public void createFile(String filename){
+        try {
+            File file = new File(filename);
+            if(file.createNewFile()){
+                System.out.println("File created: " + file.getName());
+            }else{
+                System.out.println("File already exists.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 	
     public void writeFile(String fileName, ArrayList<String> lines) {
@@ -52,6 +67,9 @@ public class FileService {
 	file.delete();
 	writeFile(fileName, lines);
     }
+    
+ 
+
 
     private ArrayList<String> readLinesExceptId(String fileName, String id) {
         ArrayList<String> lines = new ArrayList<>();

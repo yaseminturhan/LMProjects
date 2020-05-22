@@ -17,7 +17,7 @@ public class UserService extends FileService implements UserRepository{
         int id = super.getLastId(USERS_FILE);
         t.setId(String.valueOf(id));
         super.writeFile(USERS_FILE,t.toString());
-        super.writeFile(t.getUsername()+".txt", "");
+        super.createFile(t.getUsername()+".txt");
     }
 
     @Override

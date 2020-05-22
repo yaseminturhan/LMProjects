@@ -1,0 +1,4 @@
+0___kitap1___yazar1___yıl1___kategori1___yayın1
+1___kitap2___yazar2___tarih2___kategori2___yayın2
+2___da___sad___dsa___sad___das
+3___sdasasaöm___km___mk___k___m

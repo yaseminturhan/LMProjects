@@ -27,7 +27,7 @@ public class BookService extends FileService implements BookRepository{
     
     
     public List<BookModel> getByName(String name) {
-        List<String> lines = super.readLinesByPublisher(FILE_NAME, name);
+        List<String> lines = super.readLinesByName(FILE_NAME, name);
         return allToBook(lines);
     }
    

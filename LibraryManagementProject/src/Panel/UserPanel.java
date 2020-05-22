@@ -40,6 +40,7 @@ public class UserPanel extends javax.swing.JFrame {
         takeBook = new javax.swing.JButton();
         filterTxt = new javax.swing.JTextField();
         chooseFilter = new javax.swing.JComboBox<>();
+        logoutButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         myLibraryTable = new javax.swing.JTable();
@@ -79,24 +80,33 @@ public class UserPanel extends javax.swing.JFrame {
 
         chooseFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Name", "Author", "Category" }));
 
+        logoutButton.setText("Log Out");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(takeBook, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(listBtn)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(chooseFilter, 0, 141, Short.MAX_VALUE)
-                            .addComponent(filterTxt))))
+                            .addComponent(filterTxt)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(listBtn))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(takeBook, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -116,11 +126,13 @@ public class UserPanel extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(listBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(takeBook)))
+                        .addComponent(takeBook)
+                        .addGap(18, 18, 18)
+                        .addComponent(logoutButton)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("kütüphane", jPanel1);
+        jTabbedPane1.addTab("Library", jPanel1);
 
         myLibraryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,7 +175,7 @@ public class UserPanel extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("kullanıcı", jPanel2);
+        jTabbedPane1.addTab("My Library", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,9 +205,7 @@ public class UserPanel extends javax.swing.JFrame {
         choosing = chooseFilter.getSelectedItem().toString();
         
         if(choosing == "Name"){
-            
            libraryBooksList = bookService.getByName(filterTxt.getText());
-           
         }
         else if (choosing == "Author"){
             
@@ -203,10 +213,8 @@ public class UserPanel extends javax.swing.JFrame {
         }
         else if (choosing=="Category"){
           libraryBooksList = bookService.getByCategory(filterTxt.getText());
-        }
-        
-        else{
-            
+        }     
+        else{   
             libraryBooksList = bookService.getAll();
         }
         
@@ -245,6 +253,12 @@ public class UserPanel extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_filterTxtActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // TODO add your handling code here:
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
 
     
@@ -293,6 +307,7 @@ public class UserPanel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable libraryTable;
     private javax.swing.JButton listBtn;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JTable myLibraryTable;
     private javax.swing.JButton returnBtn;
     private javax.swing.JButton takeBook;
