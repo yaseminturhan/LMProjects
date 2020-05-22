@@ -5,8 +5,9 @@
  */
 package Panel;
 
-
-import Panel.HomePanel;
+import ClassImplemantation.AdminPage;
+import ClassImplemantation.HomePage;
+import ClassImplemantation.UserImp;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -105,17 +106,17 @@ public class LoginPage extends javax.swing.JFrame {
     }
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-         /*if(getUserName().equals("admin") && getPassword().equals("admin")) {
-				//AdminPage adminFrame = new AdminPage();
-				//adminFrame.setVisible(true);
+         if(getUserName().equals("admin") && getPassword().equals("admin")) {
+				AdminPage adminFrame = new AdminPage();
+				adminFrame.setVisible(true);
 				dispose();
 			} else if(new UserImp().login(getUserName(), getPassword())) {
-				HomePanel homePage = new HomePanel();
+				HomePage homePage = new HomePage();
 				dispose();
 				homePage.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), "Username or password is wrong!", "Login Error", JOptionPane.ERROR_MESSAGE);
-			}*/
+			}
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
